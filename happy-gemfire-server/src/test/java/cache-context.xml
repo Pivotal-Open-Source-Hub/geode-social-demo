@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:gfe="http://www.springframework.org/schema/gemfire"
+	xmlns:gfe-data="http://www.springframework.org/schema/data/gemfire"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/data/gemfire http://www.springframework.org/schema/data/gemfire/spring-data-gemfire.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/gemfire http://www.springframework.org/schema/gemfire/spring-gemfire.xsd">
+	
+	
+	<util:properties id="peerCacheConfigurationSettings">
+		<prop key="name">springGemFirePeerCache</prop>
+		<prop key="log-level">config</prop>
+		<prop key="mcast-port">0</prop>
+	</util:properties>
+	
+	<bean id="pdxSerializer" class="com.gemstone.gemfire.pdx.ReflectionBasedAutoSerializer">
+		<constructor-arg value="io.pivotal.happysocial.model.*"/>
+	</bean>
+	
+	<gfe:cache properties-ref="peerCacheConfigurationSettings" pdx-serializer-ref="pdxSerializer"/>
+	
+	<bean id="partitionResolver" class="io.pivotal.happysocial.model.PostPartitionResolver"/>
+	
+    <!-- configure the regions and wire in event extensions -->
+	<gfe:partitioned-region id="people" copies="1"/>
+	
+	<!-- configure the regions and wire in event extensions -->
+	<gfe:partitioned-region id="posts" copies="1">
+	  <gfe:partition-resolver ref="partitionResolver"/>
+	</gfe:partitioned-region>
+
+	<gfe:replicated-region id="moodWords" name="moodWords"/>
+	
+    <bean id="moodScorer" class="io.pivotal.happysocial.mood.MoodScorerImpl">
+      <constructor-arg ref="moodWords"/>
+    </bean>
+	
+	<context:component-scan base-package="io.pivotal.happysocial"/>
+	<gfe-data:function-executions base-package="io.pivotal.happysocial.functions"/>
+	<gfe:annotation-driven />
+	<gfe-data:repositories base-package="io.pivotal.happysocial.repositories" />
+</beans>
+
