@@ -12,7 +12,7 @@ public class Person {
   private String description;
 
   @PersistenceConstructor
-  public Person(String name) {
+  public Person(String name, String description) {
     this.name = name;
   }
 

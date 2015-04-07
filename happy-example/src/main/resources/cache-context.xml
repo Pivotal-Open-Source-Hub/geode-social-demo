@@ -16,24 +16,16 @@
 		<constructor-arg value="io.pivotal.happysocial.model.*"/>
 	</bean>
 	
-	<gfe:cache pdx-serializer-ref="pdxSerializer"/>
+	<gfe:client-cache pdx-serializer-ref="pdxSerializer"/>
 	
 	<bean id="partitionResolver" class="io.pivotal.happysocial.model.PostPartitionResolver"/>
 	
-	<gfe:partitioned-region id="people" copies="1"/>
+	<gfe:client-region id="people"/>
 	
-	<gfe:partitioned-region id="posts" copies="1">
-	  <gfe:partition-resolver ref="partitionResolver"/>
-	</gfe:partitioned-region>
+	<gfe:client-region id="posts"/>
 
-	<gfe:replicated-region id="moodWords" name="moodWords"/>
-	
 	<context:component-scan base-package="io.pivotal.happysocial"/>
 	<gfe:annotation-driven />
 	<gfe-data:function-executions base-package="io.pivotal.happysocial.functions"/>
 	<gfe-data:repositories base-package="io.pivotal.happysocial.repositories" />
-
-	<bean id="moodScorer" class="io.pivotal.happysocial.mood.MoodScorerImpl">
-      <constructor-arg ref="moodWords"/>
-    </bean>
 </beans>

@@ -10,9 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import com.gemstone.gemfire.cache.Region;
 
 public class MoodScorerImpl implements MoodScorer {
 
