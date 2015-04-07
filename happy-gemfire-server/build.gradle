@@ -15,7 +15,7 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-    baseName = 'gs-accessing-data-gemfire'
+    baseName = 'happy-gemfire-server'
     version = '0.1.0'
 }
 
@@ -26,6 +26,7 @@ repositories {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-gemfire")
+    compile project(":happy-common")
 }
 
 task wrapper(type: Wrapper) {

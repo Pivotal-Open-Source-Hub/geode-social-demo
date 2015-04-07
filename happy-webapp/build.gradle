@@ -27,6 +27,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-data-gemfire")
     testCompile("junit:junit")
+    compile project(":happy-common")
 }
 
 task wrapper(type: Wrapper) {

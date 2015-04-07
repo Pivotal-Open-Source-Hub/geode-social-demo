@@ -19,9 +19,14 @@ public class Post {
   }
   
   @PersistenceConstructor
-  public Post(String personId) {
+  public Post(String personId, String text) {
     this.id = new PostId(personId);
+    this.text = text;
     this.date = new Date();
+  }
+
+  public Post(String personId) {
+    this(personId, null);
   }
 
   public PostId getId() {

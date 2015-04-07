@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.client.PoolFactoryBean;
+import org.springframework.data.gemfire.function.config.EnableGemfireFunctionExecutions;
 import org.springframework.data.gemfire.repository.config.EnableGemfireRepositories;
 
 import com.gemstone.gemfire.cache.GemFireCache;
@@ -18,6 +19,7 @@ import com.gemstone.gemfire.cache.client.Pool;
 
 @SpringBootApplication
 @EnableGemfireRepositories
+@EnableGemfireFunctionExecutions(basePackages = "io.pivotal.happysocial.functions")
 public class Application {
 
   @Bean
@@ -39,12 +41,23 @@ public class Application {
   }
 
   @Bean
-  ClientRegionFactoryBean<String, Person> clientRegionFactory(
+  ClientRegionFactoryBean<String, Person> peopleFactory(
       final GemFireCache cache) {
     return new ClientRegionFactoryBean<String, Person>() {
       {
         setCache(cache);
         setName("people");
+      }
+    };
+  }
+  
+  @Bean(name="posts")
+  ClientRegionFactoryBean<String, Person> postsFactory(
+      final GemFireCache cache) {
+    return new ClientRegionFactoryBean<String, Person>() {
+      {
+        setCache(cache);
+        setName("posts");
       }
     };
   }

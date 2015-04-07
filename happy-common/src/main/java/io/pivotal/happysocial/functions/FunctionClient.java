@@ -7,7 +7,9 @@ import java.util.Set;
 
 import org.springframework.data.gemfire.function.annotation.Filter;
 import org.springframework.data.gemfire.function.annotation.OnRegion;
+import org.springframework.stereotype.Component;
 
+@Component
 @OnRegion(region = "posts")
 public interface FunctionClient {
   public List<MoodResult> getMood(@Filter Set<String> people);

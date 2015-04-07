@@ -1,0 +1,1 @@
+include 'happy-common', 'happy-gemfire-server', 'happy-webapp'
