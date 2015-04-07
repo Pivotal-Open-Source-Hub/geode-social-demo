@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="com.gemstone.gemfire.internal.logging.log4j">
+  <Appenders>
+    <Console name="STDOUT" target="SYSTEM_OUT"/>
+  </Appenders>
+  <Loggers>
+    <Logger name="com.gemstone.gemfire" level="WARN">
+    </Logger>
+    <Root level="WARN">
+      <AppenderRef ref="STDOUT"/> 
+    </Root>
+  </Loggers>
+</Configuration>

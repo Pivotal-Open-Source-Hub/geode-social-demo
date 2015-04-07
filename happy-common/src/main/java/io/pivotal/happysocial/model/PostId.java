@@ -11,6 +11,10 @@ public class PostId implements Serializable {
   
   private String person;
   private UUID postId;
+  
+  public PostId() {
+    
+  }
 
   @PersistenceConstructor
   public PostId(String person) {

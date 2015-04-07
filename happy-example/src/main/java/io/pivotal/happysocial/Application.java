@@ -15,12 +15,14 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import com.gemstone.gemfire.cache.query.FunctionDomainException;
 import com.gemstone.gemfire.cache.query.NameResolutionException;
 import com.gemstone.gemfire.cache.query.QueryInvocationTargetException;
 import com.gemstone.gemfire.cache.query.TypeMismatchException;
 
+@Component
 public class Application {
   
   @Autowired
@@ -34,12 +36,12 @@ public class Application {
   
 
   public static void main(String[] args) throws IOException, FunctionDomainException, TypeMismatchException, NameResolutionException, QueryInvocationTargetException {
-    new Application().run();
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("cache-context.xml");
+    Application application = context.getBean(Application.class);
+    application.run();
   }
   
   public void run() {
-    ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("cache-context.xml");
-    
     people.save(new Person("SpongeBob", "SpongeBob SquarePants"));
     people.save(new Person("Neil", "Neil deGrasse Tyson"));
     

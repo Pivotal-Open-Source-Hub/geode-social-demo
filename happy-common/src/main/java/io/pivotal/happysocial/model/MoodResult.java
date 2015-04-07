@@ -3,6 +3,10 @@ package io.pivotal.happysocial.model;
 public class MoodResult {
   private String mood;
   private String personName;
+  
+  public MoodResult() {
+    
+  }
 
   public MoodResult(String mood, String personName) {
     super();
@@ -25,4 +29,11 @@ public class MoodResult {
   public void setPersonName(String personName) {
     this.personName = personName;
   }
+
+  @Override
+  public String toString() {
+    return "MoodResult [mood=" + mood + ", personName=" + personName + "]";
+  }
+  
+  
 }

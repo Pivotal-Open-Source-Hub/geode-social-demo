@@ -1,7 +1,8 @@
-//apply plugin: 'spring-boot'
+apply plugin:'application'
+mainClassName= 'io.pivotal.happysocial.Application'
 
 jar {
-    baseName = 'happy-gemfire-server'
+    baseName = 'happy-example'
     version = '0.1.0'
 }
 

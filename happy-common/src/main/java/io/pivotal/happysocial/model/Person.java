@@ -8,8 +8,11 @@ import org.springframework.data.gemfire.mapping.Region;
 public class Person {
 
   @Id
-  private final String name;
+  private String name;
   private String description;
+  
+  public Person() {
+  }
 
   @PersistenceConstructor
   public Person(String name, String description) {
@@ -27,4 +30,10 @@ public class Person {
   public String getName() {
     return name;
   }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+  
+  
 }

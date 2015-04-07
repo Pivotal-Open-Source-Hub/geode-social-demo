@@ -28,6 +28,12 @@
 
 	<gfe:replicated-region id="moodWords" name="moodWords"/>
 	
+	
+
+	<gfe:index id="postAuthor" expression="id.person" from="/posts"/>
+
+	
+	
 	<context:component-scan base-package="io.pivotal.happysocial"/>
 	<gfe:annotation-driven />
 	<gfe-data:function-executions base-package="io.pivotal.happysocial.functions"/>

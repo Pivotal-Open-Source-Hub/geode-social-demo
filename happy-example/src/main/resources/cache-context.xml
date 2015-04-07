@@ -16,7 +16,12 @@
 		<constructor-arg value="io.pivotal.happysocial.model.*"/>
 	</bean>
 	
-	<gfe:client-cache pdx-serializer-ref="pdxSerializer"/>
+	<gfe:pool id="pool">
+		<gfe:locator host="localhost" port="10334" />
+	</gfe:pool>
+	
+	
+	<gfe:client-cache pdx-serializer-ref="pdxSerializer" pool-name="pool"/>
 	
 	<bean id="partitionResolver" class="io.pivotal.happysocial.model.PostPartitionResolver"/>
 	
