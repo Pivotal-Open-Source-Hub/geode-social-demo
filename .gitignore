@@ -4,3 +4,8 @@ build
 gradle
 .settings
 output
+geode
+.classpath
+.project
+.settings
+*.swp

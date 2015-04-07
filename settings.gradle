@@ -1,1 +1,20 @@
-include 'happy-common', 'happy-gemfire-server', 'happy-webapp'
+include 'happy-common' 
+include 'happy-gemfire-server' 
+include 'happy-example'
+
+//include 'gemfire-jgroups'
+//include 'gemfire-json'
+//include 'gemfire-joptsimple'
+//include 'gemfire-junit'
+//include 'gemfire-core'
+//include 'gemfire-web'
+//include 'gemfire-web-api'
+//
+//project(':gemfire-jgroups').projectDir = new File(settingsDir, 'geode/gemfire-jgroups')
+//project(':gemfire-json').projectDir = new File(settingsDir, 'geode/gemfire-json')
+//project(':gemfire-joptsimple').projectDir = new File(settingsDir, 'geode/gemfire-joptsimple')
+//project(':gemfire-junit').projectDir = new File(settingsDir, 'geode/gemfire-junit')
+//project(':gemfire-core').projectDir = new File(settingsDir, 'geode/gemfire-core')
+//project(':gemfire-web').projectDir = new File(settingsDir, 'geode/gemfire-web')
+//project(':gemfire-web-api').projectDir = new File(settingsDir, 'geode/gemfire-web-api')
+

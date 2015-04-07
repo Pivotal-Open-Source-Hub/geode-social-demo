@@ -1,4 +1,4 @@
-package io.pivotal.happysocial;
+package io.pivotal.happysocial.repositories;
 
 import io.pivotal.happysocial.model.Person;
 

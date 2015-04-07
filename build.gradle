@@ -1,1 +1,31 @@
 apply plugin: 'wrapper'
+
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//        maven { url "https://repo.spring.io/libs-release" }
+//
+//    }
+//    dependencies {
+//        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+//    }
+//}
+
+subprojects {
+
+  apply plugin: 'java'
+  apply plugin: 'eclipse'
+  apply plugin: 'idea'
+
+  repositories {
+      mavenCentral()
+      maven { url "https://repo.spring.io/libs-release" }
+  }
+
+  dependencies {
+      compile fileTree(dir: new File(project.rootDir, 'geode/gemfire-assembly/build/install/geode/lib/'), include: '*.jar')
+      testCompile ('org.springframework:spring-test:4.1.6.RELEASE')
+      testCompile ('junit:junit:4.11')
+//      compile("org.springframework.boot:spring-boot-starter-data-gemfire")
+  }
+}
