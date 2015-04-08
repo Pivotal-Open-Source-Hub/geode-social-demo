@@ -1,0 +1,13 @@
+
+run --file=data/import.gfsh --quiet
+
+import data --file=../../data/moodWords.gfd --member=server1 --region=/moodWords
+
+
+list indexes --with-stats=true
+
+query --query="select key,value from /moodWords.entrySet limit 10"
+
+query --query="select id.person, text from /posts"
+
+execute function --id=getMood --region=/posts --filter="SpongeBob"
