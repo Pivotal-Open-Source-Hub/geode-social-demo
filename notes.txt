@@ -11,3 +11,8 @@ query --query="select key,value from /moodWords.entrySet limit 10"
 query --query="select id.person, text from /posts"
 
 execute function --id=getMood --region=/posts --filter="SpongeBob"
+
+shutdown --include-locators=true
+
+Put pulse.war here
+geode/gemfire-assembly/build/install/geode/tools/Pulse
