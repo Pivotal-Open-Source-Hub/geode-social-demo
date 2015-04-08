@@ -19,6 +19,10 @@ public class Person {
     this.name = name;
   }
 
+  public Person(String name) {
+    this(name, null);
+  }
+
   public String getDescription() {
     return description;
   }

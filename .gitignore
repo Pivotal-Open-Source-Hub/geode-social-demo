@@ -9,3 +9,4 @@ geode
 .project
 .settings
 *.swp
+.gitignore

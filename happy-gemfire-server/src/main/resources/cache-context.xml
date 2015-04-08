@@ -22,12 +22,11 @@
 	
 	<gfe:partitioned-region id="people" copies="1"/>
 	
-	<gfe:partitioned-region id="posts" copies="1">
+	<gfe:partitioned-region id="posts" copies="1" colocated-with="people">
 	  <gfe:partition-resolver ref="partitionResolver"/>
 	</gfe:partitioned-region>
 
-	<gfe:replicated-region id="moodWords" name="moodWords"/>
-	
+	<gfe:replicated-region id="sentimentWords" name="sentimentWords" shortcut="REPLICATE"/>
 	
 
 	<gfe:index id="postAuthor" expression="id.person" from="/posts"/>
@@ -39,7 +38,7 @@
 	<gfe-data:function-executions base-package="io.pivotal.happysocial.functions"/>
 	<gfe-data:repositories base-package="io.pivotal.happysocial.repositories" />
 
-	<bean id="moodScorer" class="io.pivotal.happysocial.mood.MoodScorerImpl">
-      <constructor-arg ref="moodWords"/>
+	<bean id="sentimentAnalyzer" class="io.pivotal.happysocial.sentiment.SentimentAnalyzerImpl">
+      <constructor-arg ref="sentimentWords"/>
     </bean>
 </beans>

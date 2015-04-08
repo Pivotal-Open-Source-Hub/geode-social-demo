@@ -1,4 +1,4 @@
-package io.pivotal.happysocial.mood;
+package io.pivotal.happysocial.sentiment;
 
 import io.pivotal.happysocial.model.Post;
 
@@ -11,16 +11,16 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class MoodScorerImpl implements MoodScorer {
+public class SentimentAnalyzerImpl implements SentimentAnalyzer {
 
-  private Map<String, String> moodWords;
+  private Map<String, String> sentimentWords;
 
-  public MoodScorerImpl(Map<String, String> moodWords) {
-    this.moodWords = moodWords;
+  public SentimentAnalyzerImpl(Map<String, String> sentimentWords) {
+    this.sentimentWords = sentimentWords;
   }
 
   @Override
-  public String computeMood(Collection<Post> posts) {
+  public String analyze(Collection<Post> posts) {
     
     List<String> words = posts
     .stream()
@@ -28,16 +28,16 @@ public class MoodScorerImpl implements MoodScorer {
     Map<String, Long> counts = posts
         .stream()
         .flatMap(p -> Arrays.asList(p.getText().split("\\W")).stream())
-        .filter(s -> moodWords.containsKey(s))
+        .filter(s -> sentimentWords.containsKey(s))
         .collect(
-            Collectors.groupingBy(s -> moodWords.get(s), Collectors.counting()));
+            Collectors.groupingBy(s -> sentimentWords.get(s), Collectors.counting()));
 
-    Optional<Entry<String, Long>> mood = counts.entrySet().stream()
+    Optional<Entry<String, Long>> sentiment = counts.entrySet().stream()
         .sorted(Comparator.comparingLong((Entry<String, Long> e) ->  e.getValue()).reversed())
         .findFirst();
 
-    if (mood.isPresent()) {
-      return mood.get().getKey();
+    if (sentiment.isPresent()) {
+      return sentiment.get().getKey();
     } else {
       return "neutral";
     }

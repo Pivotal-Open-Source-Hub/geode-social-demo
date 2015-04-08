@@ -14,5 +14,5 @@ execute function --id=getMood --region=/posts --filter="SpongeBob"
 
 shutdown --include-locators=true
 
-Put pulse.war here
+Put pulse.war here -- this didn't work
 geode/gemfire-assembly/build/install/geode/tools/Pulse

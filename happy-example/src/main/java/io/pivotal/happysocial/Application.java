@@ -1,26 +1,28 @@
 package io.pivotal.happysocial;
 
 import io.pivotal.happysocial.functions.FunctionClient;
-import io.pivotal.happysocial.model.MoodResult;
 import io.pivotal.happysocial.model.Person;
 import io.pivotal.happysocial.model.Post;
+import io.pivotal.happysocial.model.SentimentResult;
 import io.pivotal.happysocial.repositories.PersonRepository;
 import io.pivotal.happysocial.repositories.PostRepository;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collection;
+import java.io.Reader;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
-
-import com.gemstone.gemfire.cache.query.FunctionDomainException;
-import com.gemstone.gemfire.cache.query.NameResolutionException;
-import com.gemstone.gemfire.cache.query.QueryInvocationTargetException;
-import com.gemstone.gemfire.cache.query.TypeMismatchException;
 
 @Component
 public class Application {
@@ -35,28 +37,75 @@ public class Application {
   FunctionClient functionClient;
   
 
-  public static void main(String[] args) throws IOException, FunctionDomainException, TypeMismatchException, NameResolutionException, QueryInvocationTargetException {
+  public static void main(String[] args) throws Exception {
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("cache-context.xml");
     Application application = context.getBean(Application.class);
-    application.run();
+    if(args.length > 0 && args[0].equals("analyze")) {
+      application.analyzeSentiments();
+    } else {
+      application.submitPosts();
+    }
   }
   
-  public void run() {
-    people.save(new Person("SpongeBob", "SpongeBob SquarePants"));
-    people.save(new Person("Neil", "Neil deGrasse Tyson"));
-    people.save(new Person("Ackbar", "Admiral Ackbar"));
+  private void analyzeSentiments() throws InterruptedException, IOException {
+
+    List<String> names = loadNames();
+    Random random = new Random();
+    while(true) {
+      Set<String> filter = new HashSet<String>();
+      filter.add(names.get(random.nextInt(names.size())));
+      
+      List<SentimentResult> result = functionClient.getSentiment(filter);
+      result.forEach(r -> System.out.println(r.getPersonName() + "\t is being " + r.getSentiment()));
+      
+      Thread.sleep(1000);
+      
+      if(System.in.available() > 0) {
+        System.out.println("Exiting...");
+        break;
+      }
+    }
     
-    posts.save(new Post("SpongeBob", "Run Mr. Krabs! Run like you’re not in a coma!"));
-    posts.save(new Post("Spongebob", "Excuse me, sir, but you’re sitting on my body, which is also my face."));
-    posts.save(new Post("Neil", "Space exploration is a force of nature unto itself that no other force in society can rival."));
-    posts.save(new Post("Ackbar", "It's a trap!"));
+  }
+
+  public void submitPosts() throws IOException, InterruptedException {
     
-    Collection<Post> neilsPosts = posts.findPosts("Neil");
-    System.out.println(neilsPosts);
+    List<String> names = loadNames();
     
-    Set<String> filter = new HashSet<String>();
-    filter.add("Ackbar");
-    List<MoodResult> result = functionClient.getMood(filter);
-    System.out.println("Admiral Ackbar is being " + result.get(0).getMood());
+    for(String name: names) {
+      people.save(new Person(name));
+    }
+    
+
+    Random random = new Random();
+    Reader in = new FileReader(new File("data", "/Sentiment Analysis Dataset.csv"));
+    CSVParser tweets = CSVFormat.DEFAULT.withHeader().parse(in);
+    int tweetCount = 0;
+    for(CSVRecord tweet : tweets) {
+      String name = names.get(random.nextInt(names.size()));
+      String post = tweet.get("SentimentText");
+      posts.save(new Post(name, post));
+      tweetCount++;
+      System.out.println(name + ": " + post);
+      
+      Thread.sleep(1000);
+      if(System.in.available() > 0) {
+        System.out.println("Exiting...");
+        System.out.println("Posted " + tweetCount + " tweets");
+        break;
+      }
+    }
+  }
+
+  private List<String> loadNames() throws IOException {
+    
+    Reader in = new FileReader(new File("data", "/names.csv"));
+    CSVParser names = CSVFormat.DEFAULT.parse(in);
+    
+    List<String> results = names.getRecords().stream()
+        .map(r -> r.get(0))
+        .collect(Collectors.toList());
+    
+    return results;
   }
 }

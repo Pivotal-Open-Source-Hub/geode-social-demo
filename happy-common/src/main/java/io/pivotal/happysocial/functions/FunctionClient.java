@@ -1,6 +1,6 @@
 package io.pivotal.happysocial.functions;
 
-import io.pivotal.happysocial.model.MoodResult;
+import io.pivotal.happysocial.model.SentimentResult;
 
 import java.util.List;
 import java.util.Set;
@@ -12,5 +12,5 @@ import org.springframework.stereotype.Component;
 @Component
 @OnRegion(region = "posts")
 public interface FunctionClient {
-  public List<MoodResult> getMood(@Filter Set<String> people);
+  public List<SentimentResult> getSentiment(@Filter Set<String> people);
 }

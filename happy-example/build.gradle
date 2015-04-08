@@ -8,4 +8,11 @@ jar {
 
 dependencies {
     compile project(":happy-common")
+    compile ('org.apache.commons:commons-csv:1.1');
+}
+
+run {
+    if (project.hasProperty('args')) {
+        args project.args.split('\\s')
+    }
 }

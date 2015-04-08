@@ -1,10 +1,9 @@
 package io.pivotal.happysocial.functions;
 
-import io.pivotal.happysocial.model.MoodResult;
+import io.pivotal.happysocial.model.SentimentResult;
 import io.pivotal.happysocial.model.Post;
-import io.pivotal.happysocial.mood.MoodScorer;
+import io.pivotal.happysocial.sentiment.SentimentAnalyzer;
 import io.pivotal.happysocial.repositories.PostRepository;
-
 import java.util.Collection;
 import java.util.Set;
 
@@ -19,14 +18,14 @@ public class Functions {
   private PostRepository postRepository;
 
   @Autowired
-  MoodScorer moodScorer;
+  SentimentAnalyzer sentimentAnalyzer;
 
   @GemfireFunction
-  public MoodResult getMood(@Filter Set<String> personNames) {
+  public SentimentResult getSentiment(@Filter Set<String> personNames) {
     String personName = personNames.iterator().next();
     Collection<Post> posts = postRepository.findPosts(personName);
-    String mood = moodScorer.computeMood(posts);
-    return new MoodResult(mood, personName);
+    String sentiment = sentimentAnalyzer.analyze(posts);
+    return new SentimentResult(sentiment, personName);
     
   }
 }
