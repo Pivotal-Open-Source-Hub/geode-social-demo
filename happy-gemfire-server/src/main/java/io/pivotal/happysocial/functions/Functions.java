@@ -20,7 +20,7 @@ public class Functions {
   @Autowired
   SentimentAnalyzer sentimentAnalyzer;
 
-  @GemfireFunction
+  @GemfireFunction(HA=true)
   public SentimentResult getSentiment(@Filter Set<String> personNames) {
     String personName = personNames.iterator().next();
     Collection<Post> posts = postRepository.findPosts(personName);
