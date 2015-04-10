@@ -79,7 +79,9 @@ public class Application {
 
     Random random = new Random();
     Reader in = new FileReader(new File("data", "/Sentiment Analysis Dataset.csv"));
-    CSVParser tweets = CSVFormat.DEFAULT.withHeader().parse(in);
+    // Some of the data has comments. Don't use any comment characters or escape
+    // characters
+    CSVParser tweets = CSVFormat.newFormat(',').withHeader().parse(in);
     int tweetCount = 0;
     for(CSVRecord tweet : tweets) {
       String name = names.get(random.nextInt(names.size()));
