@@ -14,10 +14,19 @@
        and Comparing Opinions on the Web." Proceedings of the 14th 
        International World Wide Web conference (WWW-2005), May 10-14, 
        2005, Chiba, Japan.
+
+Social posts from twitter, via
+http://thinknook.com/twitter-sentiment-analysis-training-corpus-dataset-2012-09-22/       
  
 ------------------------------------------------------------
 
 To use, install a copy of geode in this folder, with the name "geode"
+
+cd geode
+./gradlew installDist
+
+Install a copy of pulse in the compiled geode code
+cp pulse.war gemfire-assembly/build/install/geode/tools/Pulse/
 
 Compile the server side code
 gradle happy-gemfire-server:installDist
@@ -34,11 +43,15 @@ cd happy-example
 gradle run
 
 Start the analyzer process
+cd happy-example
 gradle run -Pargs=analyze
 
 Start gfsh
 . bin/setenv.sh
 gfsh
+
+Look at pulse
+gfsh> start pulse
 
 Stop the feed or analyzer
 Press any key in the terminal
