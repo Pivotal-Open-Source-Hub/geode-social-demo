@@ -27,17 +27,9 @@ public class Functions {
   @GemfireFunction(HA=true)
   public SentimentResult getSentiment(Region<PostId, Post> localPosts, @Filter Set<String> personNames) throws Exception {
     String personName = personNames.iterator().next();
-    PostRepository postRepository = getRepostory(localPosts);
-    Collection<Post> posts = postRepository.findPosts(personName);
+    Collection<Post> posts = localPosts.query("id.person='" + personName + "'");
     String sentiment = sentimentAnalyzer.analyze(posts);
     return new SentimentResult(sentiment, personName);
     
-  }
-
-  private PostRepository getRepostory(Region<PostId, Post> postRegion) {
-    GemfireRepositoryFactory factory = new GemfireRepositoryFactory(
-        Collections.singleton(postRegion), null);
-    PostRepository postRepository = factory.getRepository(PostRepository.class);
-    return postRepository;
   }
 }
