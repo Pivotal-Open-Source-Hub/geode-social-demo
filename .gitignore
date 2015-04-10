@@ -1,7 +1,6 @@
 .springBeans
 build
 .gradle
-gradle
 .settings
 output
 geode
