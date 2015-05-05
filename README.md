@@ -23,40 +23,39 @@ http://thinknook.com/twitter-sentiment-analysis-training-corpus-dataset-2012-09-
 To use, install a copy of geode in this folder, with the name "geode"
 
 cd geode
-./gradlew installDist
+    ./gradlew installDist
 
 Install a copy of pulse in the compiled geode code
-cp pulse.war gemfire-assembly/build/install/geode/tools/Pulse/
+    cp pulse.war gemfire-assembly/build/install/geode/tools/Pulse/
 
 Compile the server side code
-gradle happy-gemfire-server:installDist
+    gradle happy-gemfire-server:installDist
 
 Start the servers
-bin/locator.sh
-bin/servers.sh
+    bin/locator.sh
+    bin/servers.sh
 
 Start the chaos monkey
-bin/chaos.pl
+    bin/chaos.pl
 
 Start the feed of posts
-cd happy-example
-gradle run
+    cd happy-example
+    gradle run
 
 Start the analyzer process
-cd happy-example
-gradle run -Pargs=analyze
+    cd happy-example
+    gradle run -Pargs=analyze
 
 Start gfsh
-. bin/setenv.sh
-gfsh
+    . bin/setenv.sh
+    gfsh
 
 Look at pulse
-gfsh> start pulse
+    gfsh> start pulse
 
-Stop the feed or analyzer
-Press any key in the terminal
+To stop the feed or analyzer, press any key in the terminal
 
 Kill everying
-bin/nuke.sh
+    bin/nuke.sh
 
 
