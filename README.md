@@ -22,7 +22,8 @@ http://thinknook.com/twitter-sentiment-analysis-training-corpus-dataset-2012-09-
 
 To use, install a copy of geode in this folder, with the name "geode"
 
-    cd geode
+    git clone https://github.com/upthewaterspout/geode-social-demo.git
+    cd incubator-geode
     ./gradlew installDist
 
 Install a copy of pulse in the compiled geode code
@@ -31,7 +32,7 @@ Install a copy of pulse in the compiled geode code
 
 Compile the server side code
 
-    gradle happy-gemfire-server:installDist
+    ./gradlew happy-gemfire-server:installDist
 
 Start the servers
 

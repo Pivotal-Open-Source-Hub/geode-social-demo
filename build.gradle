@@ -10,7 +10,7 @@ subprojects {
   }
 
   dependencies {
-      compile fileTree(dir: new File(project.rootDir, 'geode/gemfire-assembly/build/install/geode/lib/'), include: '*.jar')
+      compile fileTree(dir: new File(project.rootDir, 'incubator-geode/gemfire-assembly/build/install/apache-geode/lib/'), include: '*.jar')
       compile ('org.springframework:spring-aop:4.1.6.RELEASE')
       testCompile ('org.springframework:spring-test:4.1.6.RELEASE')
       testCompile ('junit:junit:4.11')

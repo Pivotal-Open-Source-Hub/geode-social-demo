@@ -3,7 +3,7 @@
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PROJECT_HOME="$(dirname "$SCRIPT_DIR")"
 
-export GEMFIRE_HOME=$PROJECT_HOME/geode/gemfire-assembly/build/install/geode/
+export GEMFIRE_HOME=$PROJECT_HOME/incubator-geode/gemfire-assembly/build/install/apache-geode/
 export PATH=$PATH:$GEMFIRE_HOME/bin
 
 # Setup your java home if necessary
